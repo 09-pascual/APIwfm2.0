@@ -5,9 +5,9 @@ from django.conf import settings
 class Worker(models.Model):
 
     STATUS_CHOICES= [
-        ('active', 'active'),
-        ('inactive', 'inactive'),
-        ('on-leave','on-leave'),
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+        ('on_leave','On Leave'),
     ]
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="worker_profile")
