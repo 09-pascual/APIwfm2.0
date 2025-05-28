@@ -3,8 +3,9 @@ from rest_framework.permissions import IsAuthenticated
 from wfmapi.models import Client
 
 class ClientSerializer(serializers.ModelSerializer):
+
     class Meta:
-        moddel = Client
+        model = Client
         fields = ['id', 'first_name', 'last_name', 'address', 'phone_number', 'email']
 
 
