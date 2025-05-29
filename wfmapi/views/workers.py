@@ -14,5 +14,5 @@ class WorkerSerializer(serializers.ModelSerializer):
 class WorkerViewSet(viewsets.ModelViewSet):
     queryset = Worker.objects.select_related('user').all()
     serializer_class = WorkerSerializer
-    permission_classes = IsAuthenticated
+    permission_classes = {IsAuthenticated}
     

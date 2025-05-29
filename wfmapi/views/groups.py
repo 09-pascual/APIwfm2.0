@@ -20,7 +20,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields= ['id', 'name', 'description', 'workers', 'worker_ids']
+        fields= ['id', 'name', 'workers', 'worker_ids']
 
     def create(self, validated_data):
         wids = validated_data.pop('worker_ids', [])
