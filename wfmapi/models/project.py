@@ -16,7 +16,7 @@ class Project(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='upcoming')
     start_date = models.DateField()
     end_date = models.DateField()
-    excepted_durations = models.PositiveIntegerField(help_text="duraiton in days")
+    expected_duration = models.PositiveIntegerField(default=3, help_text="duration in days")
     workers = models.ManyToManyField(Worker, through="ProjectWorker", related_name="projects")
     groups = models.ManyToManyField(Group, through="ProjectGroup", related_name='projects')
 
