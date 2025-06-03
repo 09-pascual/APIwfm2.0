@@ -3,8 +3,8 @@ from django.urls import include, path
 from rest_framework import routers
 from wfmapi.views import register
 from wfmapi.views import ClientViewSet, GroupViewset, ProjectViewSet, UserViewSet, WorkerViewSet, ProjectWorkerViewSet, GroupWorkerViewSet, ProjectGroupViewSet  
-
-
+from wfmapi.views.user import get_current_user
+from wfmapi.views.projects import get_my_projects
 
 router = routers.DefaultRouter(trailing_slash=False)
 # Register viewsets
@@ -21,5 +21,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('register', register.register_user),
     path('login', register.login_user),
+    path('users/me/', get_current_user),
+    path('my-projects/', get_my_projects)
 ]
 

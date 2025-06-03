@@ -1,6 +1,9 @@
 from rest_framework import serializers,viewsets
 from rest_framework.permissions import IsAuthenticated
 from wfmapi.models import Project, Worker, Group
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+
 
 class WorkerBriefSerializer(serializers.ModelSerializer):
 
@@ -61,3 +64,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated]
 
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_my_projects(request):
+    worker = Worker.objects.get(user=request.user)
+    projects = Project.objects.filter(workers=worker)
+    serializer = ProjectSerializer(projects, many=True)
+    return Response(serializer.data)
