@@ -17,6 +17,7 @@ class Project(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     expected_duration = models.PositiveIntegerField(default=3, help_text="duration in days")
+    address = models.CharField(max_length=255)
     workers = models.ManyToManyField(Worker, through="ProjectWorker", related_name="projects")
     groups = models.ManyToManyField(Group, through="ProjectGroup", related_name='projects')
 
