@@ -8,7 +8,7 @@ class WorkerNestedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Worker
-        fields = ['id' 'email', 'status']
+        fields = ['id' ,'email', 'status']
 
 
 class GroupSerializer(serializers.ModelSerializer):
