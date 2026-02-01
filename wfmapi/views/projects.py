@@ -45,27 +45,42 @@ class ProjectSerializer(serializers.ModelSerializer):
             'groups',  'group_ids',]
         
     def create(self, validated_data):
+        # FIXED: Extract the client and create project explicitly
         wids = validated_data.pop('worker_ids', [])
         gids = validated_data.pop('group_ids', [])
         client = validated_data.pop('client_id')
-        project = super().create(validated_data)
+        
+        # Create the project with the client assigned
+        project = Project.objects.create(client=client, **validated_data)
+        
+        # Set the many-to-many relationships
         project.workers.set(wids)
         project.groups.set(gids)
         return project
 
 
     def update(self, instance, validated_data):
+        # FIXED: Cleaner update logic
         wids = validated_data.pop('worker_ids', None)
         gids = validated_data.pop('group_ids', None)
         client = validated_data.pop('client_id', None)
+        
+        # Update client if provided
         if client:
             instance.client = client
-        project = super().update(instance, validated_data)
+        
+        # Update other fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        
+        # Update many-to-many relationships if provided
         if wids is not None:
-            project.workers.set(wids)
+            instance.workers.set(wids)
         if gids is not None:
-            project.groups.set(gids)
-        return project
+            instance.groups.set(gids)
+        
+        return instance
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
